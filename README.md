@@ -1,2 +1,4 @@
 # accumulated-per-day-table
-Ejecución
+
+Ejecución:
+python Sql.py
