@@ -6,7 +6,7 @@ Codigo para calcular los ingresos y salidas totales desde postgreSQL
 sudo apt install python3-pip
 git clone https://github.com/ClaudioCampuzano/accumulated-per-day-table.git && cd accumulated-per-day-table
 virtualenv env --python=python3 && source env/bin/activate
-pip3 install -r requeriments.txt
+pip3 install -r requirements.txt
 ```
 
 ## Ejecución:
