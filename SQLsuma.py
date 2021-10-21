@@ -3,10 +3,12 @@ from psycopg2 import extras
 from psycopg2 import sql
 import argparse
 import requests
+from datetime import datetime
+from datetime import timedelta
 
 def sendSlackMsg(message):
     payload = '{"text":"%s"}' % message
-    res = requests.post('URL_API',data=payload)
+    res = requests.post('API_URL',data=payload)
     if res.status_code == 200:
         print('Ok')
     else:
@@ -60,7 +62,8 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Small program to sum the inputs and outputs of a table in postgreSQL')
     parser.add_argument('-n', '--mallName', type=str, required=True, help='name of the mall to report')
     parser.add_argument('-i', '--mall_id', type=str, default='1', required=True, help='value of mallId')
-    parser.add_argument('-d', '--date', type=str, default='09/13/2021', required=True, help='date in format MM/DD/YYYY')
     args = parser.parse_args()
 
-    main(args.mall_id,args.date,args.mallName)
+    date_yesterday = (datetime.now() - timedelta(days=1)).strftime('%m/%d/%Y')
+
+    main(args.mall_id,date_yesterday,args.mallName)
