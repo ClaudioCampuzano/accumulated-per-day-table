@@ -2,6 +2,15 @@ import psycopg2
 from psycopg2 import extras
 from psycopg2 import sql
 import argparse
+import requests
+
+def sendSlackMsg(message):
+    payload = '{"text":"%s"}' % message
+    res = requests.post('https://hooks.slack.com/services/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',data=payload)
+    if res.status_code == 200:
+        print('Ok')
+    else:
+        print('Error')
 
 def connect(params_dic):
     conn = None
@@ -21,7 +30,7 @@ def recoverData(param_dic, tableName, mallId, date):
             raise ValueError('Error when trying to connect to the DB ...')
         cur = conn.cursor()
         cur.execute(queryText)
-        recordDB = cur.fetchall()        
+        recordDB = cur.fetchall()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
     finally:
@@ -31,11 +40,11 @@ def recoverData(param_dic, tableName, mallId, date):
     for record in recordDB:
         ins += int(record[7])
         outs += int(record[8])
-    print('Ingresos: '+ str(ins))
-    print('Salidas: '+ str(outs))
+
+    return f"Ingresos: {str(ins)} \n Salidas: {str(outs)}"
 
 
-def main(mallId,date):
+def main(mallId,date, mallName):
     param_dic = {
         "host": "192.168.0.127",
         "database": "dk_omia",
@@ -44,12 +53,14 @@ def main(mallId,date):
     }
     tableName='ingreso_persona'
 
-    recoverData(param_dic, tableName, mallId, date)
-    
+    res = recoverData(param_dic, tableName, mallId, date)
+    sendSlackMsg(args.mallName+':\n'+res)
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Small program to sum the inputs and outputs of a table in postgreSQL')
+    parser.add_argument('-n', '--mallName', type=str, required=True, help='name of the mall to report')
     parser.add_argument('-i', '--mall_id', type=str, default='1', required=True, help='value of mallId')
     parser.add_argument('-d', '--date', type=str, default='09/13/2021', required=True, help='date in format MM/DD/YYYY')
     args = parser.parse_args()
 
-    main(args.mall_id,args.date)
+    main(args.mall_id,args.date,args.mallName)
