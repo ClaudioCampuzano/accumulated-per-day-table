@@ -6,7 +6,7 @@ import requests
 
 def sendSlackMsg(message):
     payload = '{"text":"%s"}' % message
-    res = requests.post('https://hooks.slack.com/services/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',data=payload)
+    res = requests.post('URL_API',data=payload)
     if res.status_code == 200:
         print('Ok')
     else:
