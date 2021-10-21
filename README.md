@@ -12,5 +12,10 @@ pip3 install -r requirements.txt
 ## Ejecución:
 ```
 source env/bin/activate
-python3 SQLsuma.py -i 1 -d 10/07/2021
+python3 SQLsuma.py -i 1 -d 10/07/2021 -n QN
+```
+
+### Con Sh
+```
+./exec.sh 1 10/19/2021 QN
 ```
