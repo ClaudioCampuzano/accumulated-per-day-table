@@ -17,5 +17,5 @@ python3 SQLsuma.py -i 1 -n QN
 
 ### Con Sh
 ```
-./exec.sh 1 QN
+./exec.sh
 ```
