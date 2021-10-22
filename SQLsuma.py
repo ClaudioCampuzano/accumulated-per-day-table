@@ -56,7 +56,7 @@ def main(mallId,date, mallName):
     tableName='ingreso_persona'
 
     res = recoverData(param_dic, tableName, mallId, date)
-    sendSlackMsg(args.mallName+':\n'+res)
+    sendSlackMsg(args.mallName+' ('+str(date)+'):\n'+res)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description='Small program to sum the inputs and outputs of a table in postgreSQL')
