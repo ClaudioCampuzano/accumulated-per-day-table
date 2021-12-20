@@ -64,6 +64,6 @@ if __name__ == '__main__':
     parser.add_argument('-i', '--mall_id', type=str, default='1', required=True, help='value of mallId')
     args = parser.parse_args()
 
-    date_yesterday = (datetime.now() - timedelta(days=1)).strftime('%m/%d/%Y')
+    date_yesterday = (datetime.now() - timedelta(days=1)).strftime('%d/%m/%Y')
 
     main(args.mall_id,date_yesterday,args.mallName)
